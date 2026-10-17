@@ -20,19 +20,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY package*.json ./
 
 # Install production dependencies
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
-# Copy application code and required runtime assets
-COPY server.js ./
-COPY database.js ./
-COPY lib/ ./lib/
-COPY public/ ./public/
-COPY "Regulations and SOP/" "./Regulations and SOP/"
-COPY Users_Collect_Template.xlsx ./
-COPY minutes_template.docx ./
-COPY trichy_logo.png ./
-COPY ramapuram_logo.png ./
-COPY phd_admissions.db ./
+# Copy application code and runtime assets (filtered by .dockerignore)
+COPY . .
 
 # Prepare mount directory for persistent Cloud Storage bucket (/app/data) and uploads
 RUN mkdir -p /app/data /app/uploads /app/public/uploads
