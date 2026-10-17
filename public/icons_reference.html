@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icons Reference Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+            color: var(--text-primary);
+        }
+
+        .login-card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            margin: 2rem;
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-header i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .login-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
+        }
+
+        .kid-instructions {
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 1px dashed var(--primary-light);
+        }
+
+        .kid-instructions p {
+            margin: 0 0 10px 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .code-box {
+            background: var(--bg-tertiary);
+            padding: 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .icons-list {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        /* Custom scrollbar */
+        .icons-list::-webkit-scrollbar { width: 6px; }
+        .icons-list::-webkit-scrollbar-track { background: transparent; }
+        .icons-list::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        .icons-list::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        .icon-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid var(--glass-border);
+            gap: 15px;
+            transition: background 0.2s;
+        }
+
+        .icon-item:hover {
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 8px;
+            border-bottom-color: transparent;
+        }
+
+        .icon-preview {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .icon-details {
+            flex: 1;
+        }
+
+        .icon-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin: 0 0 2px 0;
+        }
+
+        .icon-code {
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body class="light-mode">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <h2>Icons Guide</h2>
+        </div>
+
+        <div class="kid-instructions">
+            <p>⭐️ <b>Think of these icons as digital stickers!</b></p>
+            <p>To put a sticker on your page, you just need to type its magic code. For example, to use the graduation cap sticker, you type:</p>
+            <div class="code-box">
+                &lt;i class="fa-solid <b>fa-graduation-cap</b>"&gt;&lt;/i&gt;
+            </div>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">
+                <i>Just copy the name in bold from the list below!</i>
+            </p>
+        </div>
+
+        <div class="icons-list" id="iconsList">
+            <!-- Icons will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        const allIcons = [
+            'fa-arrow-down-9-1', 'fa-arrow-down-z-a', 'fa-arrow-right', 'fa-arrow-right-arrow-left',
+            'fa-arrow-rotate-left', 'fa-arrow-up-1-9', 'fa-arrow-up-a-z', 'fa-award', 'fa-ban', 'fa-bell',
+            'fa-book-bookmark', 'fa-building', 'fa-building-columns', 'fa-building-user', 'fa-calendar-check',
+            'fa-calendar-days', 'fa-chart-bar', 'fa-chart-line', 'fa-chart-pie', 'fa-check', 'fa-circle-check',
+            'fa-circle-exclamation', 'fa-circle-info', 'fa-circle-notch', 'fa-circle-xmark', 'fa-clock',
+            'fa-clock-rotate-left', 'fa-cloud-arrow-up', 'fa-comment-dots', 'fa-door-open', 'fa-download',
+            'fa-envelope', 'fa-envelope-open-text', 'fa-eye', 'fa-eye-slash', 'fa-face-smile', 'fa-file-arrow-up',
+            'fa-file-excel', 'fa-file-invoice', 'fa-file-lines', 'fa-file-pdf', 'fa-file-word', 'fa-file-zip',
+            'fa-floppy-disk', 'fa-folder-open', 'fa-gears', 'fa-graduation-cap', 'fa-hourglass-half', 'fa-industry',
+            'fa-key', 'fa-list', 'fa-list-check', 'fa-lock', 'fa-magnifying-glass', 'fa-map-location-dot', 'fa-moon',
+            'fa-network-wired', 'fa-paper-plane', 'fa-pen-to-square', 'fa-phone', 'fa-plus', 'fa-ranking-star',
+            'fa-right-from-bracket', 'fa-right-to-bracket', 'fa-save', 'fa-search', 'fa-share-from-square',
+            'fa-shield-halved', 'fa-sliders', 'fa-sort', 'fa-spinner', 'fa-square-check', 'fa-square-minus',
+            'fa-sun', 'fa-times', 'fa-trash', 'fa-trash-can', 'fa-triangle-exclamation', 'fa-university',
+            'fa-unlock', 'fa-upload', 'fa-user-check', 'fa-user-clock', 'fa-user-graduate', 'fa-user-plus',
+            'fa-users', 'fa-users-gear', 'fa-user-shield', 'fa-users-viewfinder', 'fa-user-tie', 'fa-wand-magic-sparkles',
+            'fa-xmark'
+        ];
+
+        const container = document.getElementById('iconsList');
+        
+        allIcons.forEach(iconClass => {
+            const prettyName = iconClass.replace('fa-', '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            
+            const html = `
+                <div class="icon-item">
+                    <div class="icon-preview">
+                        <i class="fa-solid ${iconClass}"></i>
+                    </div>
+                    <div class="icon-details">
+                        <p class="icon-name">${prettyName}</p>
+                        <p class="icon-code">${iconClass}</p>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += html;
+        });
+
+        // Theme check
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.remove('light-mode');
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>

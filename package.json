@@ -1,0 +1,37 @@
+{
+  "name": "phd_admissions_webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "acorn": "^8.18.0",
+    "docxtemplater": "^3.68.7",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "localtunnel": "^2.0.2",
+    "markdown-pdf": "^11.0.0",
+    "marked": "^18.0.9",
+    "md-to-pdf": "^5.2.5",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.10",
+    "pdf-parse": "^2.4.5",
+    "pizzip": "^3.2.0",
+    "puppeteer": "^25.10.0",
+    "socket.io": "^4.8.3",
+    "sqlite3": "^6.0.1",
+    "unzipper": "^0.12.3",
+    "xlsx": "^0.18.5"
+  },
+  "allowScripts": {
+    "puppeteer@25.10.0": true,
+    "sqlite3@6.0.1": true
+  }
+}

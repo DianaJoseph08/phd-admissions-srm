@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRMIST PhD Admissions Portal</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Design Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css?v=10">
+    <link rel="stylesheet" href="/css/role_insights.css?v=1">
+</head>
+<body>
+    <!-- Main SPA Mounting Wrapper -->
+    <div id="app"></div>
+
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Chart.js for Visual Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Application Script -->
+    <!-- Socket.io for Real-Time Notifications -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <!-- Application Modules -->
+    <script src="/js/modules/study_mode_policy.js?v=1"></script>
+    <script src="/js/modules/base.js?v=22"></script>
+    <script src="/js/modules/notifications.js?v=13"></script>
+    <script src="/js/modules/audit.js?v=10"></script>
+    <script src="/js/modules/layout.js?v=13"></script>
+    <script src="/js/modules/institute_export.js?v=1"></script>
+    <script src="/js/modules/study_filters.js?v=3"></script>
+    <script src="/js/modules/pending_actions.js?v=7"></script>
+    <script src="/js/modules/role_insights.js?v=2"></script>
+    <script src="/js/modules/dashboard.js?v=13"></script>
+    <script src="/js/modules/charts_panels.js?v=16"></script>
+    <script src="/js/modules/candidates.js?v=29"></script>
+    <script src="/js/modules/transfer_email.js?v=27"></script>
+    <script src="/js/modules/users.js?v=11"></script>
+    <script src="/js/modules/interview_panels.js?v=9"></script>
+    <script src="/js/modules/question_papers.js?v=8"></script>
+    <script>
+        // Start the application once all scripts are loaded
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+    </script>
+</body>
+</html>

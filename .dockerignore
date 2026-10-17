@@ -1,0 +1,87 @@
+# Dependency cache
+node_modules/
+
+# Version control & config
+.git/
+.gitignore
+.env
+.env.*
+
+# Large archives and video recordings
+*.zip
+*.rar
+*.tar
+*.gz
+*.7z
+uploads/
+public/uploads/
+Training_Videos_*/
+all applications/
+PhD_Documents_All*/
+Question Papers*/
+Common_Question_Paper_English_July2026/
+PhD_Question_Paper_Workspace/
+Question_Paper_Setting/
+Supervisor_Details_July_2026/
+Correction_Reports/
+
+# Historical exports, workbooks & credentials
+Account_Exports_*/
+*usernames_and_passwords*
+*Usernames_and_Passwords*
+current_usernames_and_passwords.*
+PhD_Candidates_All_*.xlsx
+All_Applications.xlsx
+*.csv
+
+# Intermediate audits and backups
+change_backups/
+audit_*/
+scratch/
+cloud_deployment_*/
+fellowship_only_*/
+launch_readiness_*/
+minutes_attendance_*/
+rank_every_score_*/
+rank_selection_*/
+role_insights_*/
+transfer_fixes_*/
+transfer_review_*/
+user manuals/
+
+# Temporary / log / backup files
+*.log
+*.bak
+*.sqlite*
+~$*
+
+# Standalone development & diagnostic scripts
+*.py
+check_*.js
+test_*.js
+check.js
+test.js
+cleanup.js
+scratch_*.js
+simulate_*.js
+patch_*.js
+migrate_*.js
+add_*.js
+fix_*.js
+export_*.js
+parse_*.js
+query_*.js
+revert_*.js
+update_*.js
+generate_*.js
+delete_*.js
+list_tables.js
+schema_check.js
+minutes-*.cjs
+rank-*.cjs
+admissions-lan-proxy.cjs
+compact_buttons.js
+inject_audits.js
+google_apps_script.js
+google_form_setup.md
+ug_research_poster.html

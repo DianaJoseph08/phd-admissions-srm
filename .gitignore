@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+
+# Environment and sensitive files
+.env
+.env.*
+*usernames_and_passwords*
+*Usernames_and_Passwords*
+current_usernames_and_passwords.*
+*.csv
+
+# Large archives and video recordings (over GitHub 100MB limit)
+*.zip
+*.rar
+*.tar
+*.gz
+*.7z
+uploads/
+public/uploads/
+Training_Videos_*/
+all applications/
+PhD_Documents_All*/
+Question Papers*/
+Common_Question_Paper_English_July2026/
+PhD_Question_Paper_Workspace/
+Question_Paper_Setting/
+Supervisor_Details_July_2026/
+Correction_Reports/
+
+# Excel candidate data dumps
+PhD_Candidates_All_*.xlsx
+All_Applications.xlsx
+
+# Backups and intermediate runs
+change_backups/
+audit_*/
+scratch/
+cloud_deployment_*/
+fellowship_only_*/
+launch_readiness_*/
+minutes_attendance_*/
+rank_every_score_*/
+rank_selection_*/
+role_insights_*/
+transfer_fixes_*/
+transfer_review_*/
+user manuals/
+
+# Logs & temp files
+*.log
+*.bak
+*.sqlite*
+*.db-journal
+*.db-wal
+*.db-shm
+~$*
+.DS_Store
+Thumbs.db
+Account_Exports*/
+*.py

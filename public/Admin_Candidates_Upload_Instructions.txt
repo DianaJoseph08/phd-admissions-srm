@@ -1,0 +1,29 @@
+--------------------------------------------------
+CANDIDATE BULK UPLOAD - EXCEL TEMPLATE INSTRUCTIONS
+--------------------------------------------------
+
+When uploading candidates to the portal as an Admin, your Excel file MUST contain the following columns as headers in the first row (matches the Meritto export format).
+
+REQUIRED COLUMNS:
+1. Application No        - The unique candidate ID (e.g., 2701890017)
+2. Registered Name       - Full name of the candidate
+3. Institute             - The name of the Faculty/Institution
+4. Department            - The name of the Department
+5. Nationality           - E.g., "Indian" or "Other|singapore"
+6. Form Status           - "Complete" or "Incomplete". Only "Complete" candidates go to HOD verification.
+
+OTHER IMPORTANT COLUMNS:
+- Form Name              - E.g., "Ph.d Application Form 2027"
+- Registered Email       - Candidate's email address
+- Registered Mobile      - Candidate's phone number
+- Mode Of Study          - E.g., "Full Time", "Part Time External (academic)", etc.
+- Community (As Per Govt Norms) - E.g., "Oc", "Bc", "Mbc" (previously Category)
+- Payment Status         - E.g., "Payment Approved", "Payment Pending"
+- Payment Method         - E.g., "Online", "Offline"
+
+TIPS & WARNINGS:
+- NATIONALITY LOGIC: If a candidate's Nationality is NOT "Indian" (or "India"), the system will automatically prepend "IR" to their Application No (e.g., IR2701890017) to classify them as an International candidate.
+- DEDUPLICATION: If you re-upload an updated sheet, the system will not create duplicates. It will automatically update existing applicants with their latest details (such as Institute and Department) based on their Application No.
+- UNMAPPED CANDIDATES: If the "Institute" or "Department" names in the Excel file do not match any existing departments, those candidates are automatically sent to the Unclassified / Pending Mapping bucket (Research Office) to be routed manually.
+
+--------------------------------------------------
