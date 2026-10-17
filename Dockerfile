@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy dependency manifests
 COPY package*.json ./
 
-# Install production dependencies
-RUN npm install --omit=dev
+# Install production dependencies and rebuild sqlite3 from source for container GLIBC compatibility
+RUN npm install --omit=dev && npm rebuild sqlite3 --build-from-source
 
 # Copy application code and runtime assets (filtered by .dockerignore)
 COPY . .
