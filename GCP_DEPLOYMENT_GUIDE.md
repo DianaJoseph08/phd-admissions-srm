@@ -48,7 +48,7 @@ If you haven't linked a GitHub repository yet:
 1. Create a repository on GitHub (e.g. `phd-admissions-webapp`).
 2. Link and push:
    ```cmd
-   git remote add origin https://github.com/YOUR_USERNAME/phd-admissions-webapp.git
+   git remote add origin https://github.com/DianaJoseph08/phd-admissions-srm.git
    git push -u origin main
    ```
 
@@ -69,8 +69,8 @@ In Cloud Shell, clone your repository and deploy:
 
 ```bash
 # 1. Clone your repository
-git clone https://github.com/YOUR_USERNAME/phd-admissions-webapp.git
-cd phd-admissions-webapp
+git clone https://github.com/DianaJoseph08/phd-admissions-srm.git
+cd phd-admissions-srm
 
 # 2. Deploy to Cloud Run (builds container image automatically via Cloud Build)
 gcloud run deploy phd-admissions \

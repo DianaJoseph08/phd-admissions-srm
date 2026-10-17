@@ -56,9 +56,9 @@ echo OPTION A: Deploy via Google Cloud Shell (Recommended & Fastest)
 echo 1. Open Google Cloud Console: https://console.cloud.google.com/
 echo 2. Switch to account: sureshscience@gmail.com
 echo 3. Open Cloud Shell icon [>_] in the top right header.
-echo 4. Clone your repository (or upload code folder):
-echo      git clone YOUR_GITHUB_REPO_URL
-echo      cd YOUR_REPO_NAME
+echo 4. Clone your repository:
+echo      git clone https://github.com/DianaJoseph08/phd-admissions-srm.git
+echo      cd phd-admissions-srm
 echo 5. Run the Cloud Run deployment command:
 echo      gcloud run deploy phd-admissions --source . --region us-central1 --allow-unauthenticated
 echo.
