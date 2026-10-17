@@ -928,9 +928,9 @@ app.delete('/api/admin/users/:id', requireAuth(['admin', 'super_admin']), (req, 
 
 // --- ADMIN UPLOAD ROUTES ---
 app.post('/api/admin/upload-excel', requireAuth(['admin']), upload.single('file'), (req, res) => {
-    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const filePath = req.file ? req.file.path : (req.body && req.body.chunkedFilePath);
+    if (!filePath || !fs.existsSync(filePath)) return res.status(400).json({ error: 'No file uploaded or file not found' });
 
-    const filePath = req.file.path;
     const campusId = req.user.campus_id; // Suresh = 1 (RMP), Ruby = 2 (Trichy)
 
     try {
@@ -1197,11 +1197,74 @@ function detectDocumentType(fileName, canonicalAppNo, rawAppNo) {
     return 'Other';
 }
 
+// --- CHUNKED UPLOAD API (Bypasses Cloud Run 32MB Request Limit) ---
+app.post('/api/upload-chunk', requireAuth(), upload.single('chunk'), async (req, res) => {
+    try {
+        const { uploadId, chunkIndex, totalChunks, filename } = req.body;
+        if (!uploadId || chunkIndex === undefined || !totalChunks || !req.file) {
+            return res.status(400).json({ error: 'Missing chunk upload parameters.' });
+        }
+
+        const safeUploadId = String(uploadId).replace(/[^a-zA-Z0-9_-]/g, '');
+        const chunkDir = path.join(tempUploadDir, `chunks_${safeUploadId}`);
+        if (!fs.existsSync(chunkDir)) {
+            fs.mkdirSync(chunkDir, { recursive: true });
+        }
+
+        const currentChunk = parseInt(chunkIndex, 10);
+        const total = parseInt(totalChunks, 10);
+        const targetChunkPath = path.join(chunkDir, `part_${currentChunk}`);
+
+        // Move uploaded chunk into chunks folder
+        fs.renameSync(req.file.path, targetChunkPath);
+
+        // If not the final chunk, acknowledge chunk receipt
+        if (currentChunk < total - 1) {
+            return res.json({ success: true, chunk: currentChunk, total, done: false });
+        }
+
+        // Final chunk received: assemble chunks sequentially into single target file
+        const safeFilename = path.basename(filename || 'uploaded_file').replace(/[^a-zA-Z0-9_.-]/g, '_');
+        const assembledFilePath = path.join(tempUploadDir, `${Date.now()}_${safeFilename}`);
+        const writeStream = fs.createWriteStream(assembledFilePath);
+
+        for (let i = 0; i < total; i++) {
+            const partPath = path.join(chunkDir, `part_${i}`);
+            if (!fs.existsSync(partPath)) {
+                writeStream.destroy();
+                return res.status(400).json({ error: `Missing chunk ${i} during reassembly.` });
+            }
+            const buffer = fs.readFileSync(partPath);
+            writeStream.write(buffer);
+        }
+        writeStream.end();
+
+        await new Promise((resolve, reject) => {
+            writeStream.on('finish', resolve);
+            writeStream.on('error', reject);
+        });
+
+        // Clean up temporary chunk pieces
+        fs.rmSync(chunkDir, { recursive: true, force: true });
+
+        console.log(`[ChunkUpload] Assembled ${safeFilename} (${fs.statSync(assembledFilePath).size} bytes) -> ${assembledFilePath}`);
+        return res.json({
+            success: true,
+            done: true,
+            chunkedFilePath: assembledFilePath,
+            filename: safeFilename
+        });
+    } catch (err) {
+        console.error('[ChunkUpload] Error assembling chunk:', err);
+        return res.status(500).json({ error: 'Failed to process chunk: ' + err.message });
+    }
+});
+
 // Bulk ZIP Candidates' documents upload and extraction API
 app.post('/api/admin/upload-zip', requireAuth(['admin']), upload.single('file'), async (req, res) => {
-    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const zipPath = req.file ? req.file.path : (req.body && req.body.chunkedFilePath);
+    if (!zipPath || !fs.existsSync(zipPath)) return res.status(400).json({ error: 'No file uploaded or file not found' });
 
-    const zipPath = req.file.path;
     const campusId = req.user.campus_id;
     const extractTempDir = path.join(tempUploadDir, `zip_${Date.now()}`);
 

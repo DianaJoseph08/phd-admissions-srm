@@ -126,6 +126,53 @@ async function api(url, method = 'GET', data = null, isMultipart = false) {
     return response.json();
 }
 
+/**
+ * Universal Chunked Uploader
+ * Bypasses Cloud Run's 32 MB request limit by slicing large files into 15 MB chunks.
+ */
+async function uploadFileWithChunks(file, targetUrl, onProgress) {
+    const CHUNK_SIZE = 15 * 1024 * 1024; // 15 MB chunks (safe for Cloud Run 32MB limit)
+    
+    // For smaller files (<= 20MB), upload directly via standard FormData
+    if (file.size <= 20 * 1024 * 1024) {
+        const formData = new FormData();
+        formData.append('file', file);
+        return await api(targetUrl, 'POST', formData, true);
+    }
+
+    // For larger files: slice and upload chunks
+    const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+    const uploadId = 'upload_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+
+    for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+        const start = chunkIndex * CHUNK_SIZE;
+        const end = Math.min(file.size, start + CHUNK_SIZE);
+        const chunkBlob = file.slice(start, end);
+
+        const chunkFormData = new FormData();
+        chunkFormData.append('chunk', chunkBlob, file.name);
+        chunkFormData.append('uploadId', uploadId);
+        chunkFormData.append('chunkIndex', chunkIndex);
+        chunkFormData.append('totalChunks', totalChunks);
+        chunkFormData.append('filename', file.name);
+
+        const percent = Math.round(((chunkIndex + 1) / totalChunks) * 100);
+        if (typeof onProgress === 'function') {
+            onProgress(percent, chunkIndex + 1, totalChunks);
+        }
+
+        const chunkRes = await api('/api/upload-chunk', 'POST', chunkFormData, true);
+
+        // When the final chunk has been assembled by the server
+        if (chunkRes.done && chunkRes.chunkedFilePath) {
+            if (typeof onProgress === 'function') {
+                onProgress(100, totalChunks, totalChunks, 'Assembled on server. Processing content...');
+            }
+            return await api(targetUrl, 'POST', { chunkedFilePath: chunkRes.chunkedFilePath });
+        }
+    }
+}
+
 // Toast Feedback Notifications
 function showToast(message, type = 'success') {
     const existing = document.querySelector('.alert-toast');

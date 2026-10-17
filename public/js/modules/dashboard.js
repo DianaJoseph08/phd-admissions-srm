@@ -62,13 +62,12 @@ function setupSupervisorUploadHandlers() {
 
 async function handleSupervisorUpload(file, url, statusElement) {
     if (!file) return;
-    statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Uploading and parsing supervisor directory...</span>`;
-
-    const formData = new FormData();
-    formData.append('file', file);
+    statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Preparing upload...</span>`;
 
     try {
-        const res = await api(url, 'POST', formData, true);
+        const res = await uploadFileWithChunks(file, url, (percent) => {
+            statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Uploading ${percent}%...</span>`;
+        });
         statusElement.innerHTML = `<span style="color: var(--success)"><i class="fa-solid fa-circle-check"></i> ${res.message}</span>`;
         showToast(res.message);
         loadSupervisorsDirectory();

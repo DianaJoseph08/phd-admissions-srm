@@ -591,13 +591,18 @@ function setupUploadHandlers() {
 
 async function handleUpload(file, url, statusElement) {
     if (!file) return;
-    statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Uploading and processing file...</span>`;
-
-    const formData = new FormData();
-    formData.append('file', file);
+    statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Preparing upload...</span>`;
 
     try {
-        const res = await api(url, 'POST', formData, true);
+        const res = await uploadFileWithChunks(file, url, (percent, current, total, customMsg) => {
+            if (customMsg) {
+                statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> ${customMsg}</span>`;
+            } else if (total > 1) {
+                statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Uploading ${percent}% (Part ${current} of ${total})...</span>`;
+            } else {
+                statusElement.innerHTML = `<span style="color: var(--warning)"><i class="fa-solid fa-spinner fa-spin"></i> Uploading and processing file...</span>`;
+            }
+        });
 
         let html = `<span style="color: var(--success)"><i class="fa-solid fa-circle-check"></i> ${res.message}</span>`;
 
