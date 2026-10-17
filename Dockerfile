@@ -8,12 +8,15 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV IGNORE_PHANTOMJS=true
+ENV PHANTOMJS_SKIP_DOWNLOAD=true
 
-# Install native dependencies required for build tools (e.g. node-gyp for native modules)
+# Install native dependencies required for build tools and archive extraction
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     make \
     g++ \
+    bzip2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy dependency manifests
