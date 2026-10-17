@@ -19,6 +19,12 @@ if not exist ".git" (
     git branch -M main
 )
 
+git config user.email >nul 2>nul
+if %errorlevel% neq 0 (
+    git config user.email "sureshscience@gmail.com"
+    git config user.name "SRM Admissions Admin"
+)
+
 echo 1. Staging updated project files (Dockerfile, server, persistent engine, assets)...
 git add Dockerfile .dockerignore .gitignore package.json package-lock.json server.js database.js lib/ public/ "Regulations and SOP/" Users_Collect_Template.xlsx minutes_template.docx trichy_logo.png ramapuram_logo.png phd_admissions.db deploy_gcp.bat GCP_DEPLOYMENT_GUIDE.md
 
